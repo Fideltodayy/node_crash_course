@@ -1,31 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bloggy| <%= title %> </title>
-</head>
+<%- include('./partials/head.ejs') %>
 <body>
-  <nav>
-    <div class="site-title">
-      <a href="/">
-        <h1>
-          Bloggy
-        </h1>
-        <p>Blogs By Fidel</p>
-      </a>
-    </div>
-    <div>
-      <ul>
-        <li><a href="/">Blogs</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/blogs/create">Create</a></li>
-      </ul>
-    </div>
-  </nav>
+  <%- include('./partials/nav.ejs') %>
+
   <div class="blogs content">
     <h2>All Blogs</h2>
-    <% blogs.forEach(blog=>{%>
+    <% blogs.map(blog=>{%>
       <h3>
         <%=blog.title%>
       </h3>
@@ -34,6 +15,7 @@
       </p>
     <% })%>
   </div>
-  
+  <%- include('./partials/footer.ejs') %>
+
 </body>
 </html>
