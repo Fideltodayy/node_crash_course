@@ -24,8 +24,15 @@
     </div>
   </nav>
   <div class="blogs content">
-    <h2>Blogs Content</h2>
-
+    <h2>All Blogs</h2>
+    <% blogs.forEach(blog=>{%>
+      <h3>
+        <%=blog.title%>
+      </h3>
+      <p>
+        <%=blog.snippet%>
+      </p>
+    <% })%>
   </div>
   
 </body>
