@@ -1,9 +1,16 @@
 const express = require('express')
 const morgan = require('morgan')
+const mongoose = require('mongoose')
+const Blog = require('./models/blogs')
 
 const app = express(console.log("Server is up and running"));
+
+const dbURI = 'mongodb+srv://fideltodayy:QWERTYUIOP@blogsapp.skehwro.mongodb.net/Blogsapp?retryWrites=true&w=majority'
+mongoose.connect(dbURI)
+    .then((result) => app.listen(3000))
+    .catch((err)=> console.log(err));
+
 app.set('view engine', 'ejs');
-app.listen(3000);
 
 // Middleware and static files
 
@@ -19,13 +26,7 @@ app.use(express.static('public'));
  app.use(morgan('tiny'))
 
 app.get('/', (req,res)=>{
-    console.log("Serving the Home page")
-    const blogs = [
-        {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-        {title: 'Mario finds stars', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-        {title: 'How to defeat bowser', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-      ];
-    res.render('index',{title: "Home",blogs})
+    res.redirect('/blogs')
 })
 // app.use((req,res)=>{
 //     console.log("In the next middleware")
@@ -33,6 +34,17 @@ app.get('/', (req,res)=>{
 app.get('/about', (req,res)=>{
     res.render("about",{title: "About"})
 })
+
+app.get('/blogs',(req,res)=>{
+    Blog.find().sort({ createdAt: -1})
+        .then((results)=>{
+            res.render('index', {title: 'All Blogs', blogs: results})
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+})
+
 app.get('/blogs/create', (req,res)=>{
     res.render("create",{title: "Create Blog"})
 })
