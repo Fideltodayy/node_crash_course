@@ -4,6 +4,7 @@ const app = express(console.log("Server is up and running"));
 app.set('view engine', 'ejs');
 app.listen(3000);
 
+
 app.get('/', (req,res)=>{
     console.log("Serving the Home page")
     const blogs = [
